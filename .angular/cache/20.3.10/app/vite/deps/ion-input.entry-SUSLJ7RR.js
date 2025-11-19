@@ -1,4 +1,12 @@
-import {
+rm -rf .git
+git init
+git config user.name "Ravi2405-143" 
+git config user.email "kravitejasaisatyam@gmail.com"
+git add .
+git commit -m "MediSync App"
+git remote add origin https://github.com/Ravi2405-143/medisync.git
+git branch -M main
+git push -f origin mainimport {
   createSlotMutationController,
   getCounterText
 } from "./chunk-RTPIWHUE.js";
