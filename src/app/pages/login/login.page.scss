@@ -1,0 +1,29 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.form-container {
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+ion-item {
+  margin-bottom: 16px;
+}
+
+.login-button, .register-button {
+  margin: 20px 0;
+}
+
+.register-link, .login-link {
+  margin-top: 20px;
+}
+
+p {
+  margin: 10px 0;
+}

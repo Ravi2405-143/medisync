@@ -1,0 +1,53 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/medications"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Add Medication</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <form (ngSubmit)="saveMedication()">
+    <ion-list>
+      <ion-item>
+        <ion-input
+          label="Medication Name"
+          labelPlacement="stacked"
+          placeholder="Enter medication name"
+          [(ngModel)]="medication.name"
+          name="name"
+          required
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input
+          label="Dosage"
+          labelPlacement="stacked"
+          placeholder="e.g., 500mg"
+          [(ngModel)]="medication.dosage"
+          name="dosage"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input
+          label="Frequency"
+          labelPlacement="stacked"
+          placeholder="e.g., Once daily"
+          [(ngModel)]="medication.frequency"
+          name="frequency"
+        ></ion-input>
+      </ion-item>
+    </ion-list>
+
+    <ion-button type="submit" expand="block" class="ion-margin-top">
+      Save Medication
+    </ion-button>
+    
+    <ion-button expand="block" fill="outline" (click)="cancel()">
+      Cancel
+    </ion-button>
+  </form>
+</ion-content>

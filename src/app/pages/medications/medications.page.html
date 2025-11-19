@@ -1,0 +1,101 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>Medications</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="addAnotherMedication()">
+        <ion-icon slot="icon-only" name="add-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  
+  <!-- When medications exist -->
+  <div *ngIf="hasMedications" class="medications-list">
+    <div class="header-section">
+      <div class="stats-row">
+        <h1>Your Medications</h1>
+        <div class="action-buttons">
+          <ion-button size="small" fill="outline" (click)="markAllAsTaken()">
+            <ion-icon slot="start" name="checkmark-done-outline"></ion-icon>
+            Mark All
+          </ion-button>
+          <ion-button size="small" fill="outline" color="medium" (click)="resetAllStatus()">
+            <ion-icon slot="start" name="refresh-outline"></ion-icon>
+            Reset
+          </ion-button>
+        </div>
+      </div>
+      <p>Managing {{ getMedicationCount() }} • {{ getTakenCount() }}</p>
+    </div>
+
+    <ion-list lines="none">
+      <ion-item-sliding *ngFor="let medication of medications; let i = index">
+        <ion-item (click)="editMedication(medication)" class="medication-item" [class.taken]="medication.taken">
+          <div class="status-indicator" slot="start" (click)="toggleMedicationStatus(medication, $event)">
+            <div class="status-circle" [class.taken]="medication.taken">
+              <ion-icon *ngIf="medication.taken" name="checkmark"></ion-icon>
+            </div>
+          </div>
+          
+          <ion-label>
+            <h2>{{ medication.name }}</h2>
+            <p>{{ medication.dosage }} • {{ medication.frequency }}</p>
+            <p *ngIf="medication.instructions">{{ medication.instructions }}</p>
+            <p class="meta-info">
+              <small>Started: {{ getFormattedDate(medication.startDate) }}</small>
+              <small *ngIf="medication.lastTaken" class="last-taken">
+                • Last taken: {{ getLastTakenTime(medication) }}
+              </small>
+            </p>
+          </ion-label>
+          
+          <div class="medication-badges" slot="end">
+            <ion-badge [color]="medication.taken ? 'success' : 'medium'" class="status-badge">
+              {{ medication.taken ? 'Taken' : 'Due' }}
+            </ion-badge>
+            <ion-badge color="primary" class="index-badge">{{ i + 1 }}</ion-badge>
+          </div>
+        </ion-item>
+        
+        <ion-item-options side="end">
+          <ion-item-option color="danger" (click)="deleteMedication(medication)">
+            <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+
+    <ion-button 
+      expand="block" 
+      fill="outline" 
+      (click)="addAnotherMedication()"
+      class="ion-margin-top"
+    >
+      <ion-icon slot="start" name="add-outline"></ion-icon>
+      Add Another Medication
+    </ion-button>
+  </div>
+
+  <!-- When no medications exist -->
+  <div *ngIf="!hasMedications" class="empty-state">
+    <div class="welcome-section">
+      <h1>Your Medications</h1>
+      <p>Start managing your medications with MediSync</p>
+    </div>
+
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>No Medications Yet</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Add your first medication to get started with tracking and reminders.</p>
+        <ion-button expand="block" (click)="addFirstMedication()">
+          <ion-icon slot="start" name="add-outline"></ion-icon>
+          Add First Medication
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

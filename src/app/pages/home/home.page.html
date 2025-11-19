@@ -1,0 +1,127 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Medication Manager</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">
+        <ion-icon name="log-out-outline" slot="start"></ion-icon>
+        Logout
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="container">
+    <h2>Welcome to Medication Manager</h2>
+    <p>Manage your medications efficiently</p>
+
+    <!-- Medication Summary -->
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Medication Summary</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Total Medications: {{ getMedicationsCount() }}</p>
+        <ion-button expand="block" (click)="toggleMedicationForm()" color="primary">
+          <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+          Add New Medication
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Add Medication Form -->
+    <ion-card *ngIf="showMedicationForm">
+      <ion-card-header>
+        <ion-card-title>Add New Medication</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-label position="stacked">Medication Name</ion-label>
+          <ion-input 
+            type="text" 
+            [(ngModel)]="newMedication.name" 
+            placeholder="e.g., Aspirin, Insulin">
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Dosage</ion-label>
+          <ion-input 
+            type="text" 
+            [(ngModel)]="newMedication.dosage" 
+            placeholder="e.g., 500mg, 10 units">
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Frequency</ion-label>
+          <ion-input 
+            type="text" 
+            [(ngModel)]="newMedication.frequency" 
+            placeholder="e.g., Once daily, Twice daily">
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Time</ion-label>
+          <ion-input 
+            type="text" 
+            [(ngModel)]="newMedication.time" 
+            placeholder="e.g., Morning, After meals">
+          </ion-input>
+        </ion-item>
+
+        <div class="button-group">
+          <ion-button expand="block" (click)="addMedication()" color="success">
+            <ion-icon name="save-outline" slot="start"></ion-icon>
+            Save Medication
+          </ion-button>
+          <ion-button expand="block" fill="outline" (click)="toggleMedicationForm()" color="medium">
+            Cancel
+          </ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Medications List -->
+    <ion-card *ngIf="medications.length > 0">
+      <ion-card-header>
+        <ion-card-title>Your Medications</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list>
+          <ion-item *ngFor="let medication of medications" class="medication-item">
+            <ion-label>
+              <h3>{{ medication.name }}</h3>
+              <p>Dosage: {{ medication.dosage }}</p>
+              <p>Frequency: {{ medication.frequency }}</p>
+              <p>Time: {{ medication.time }}</p>
+            </ion-label>
+            <ion-button 
+              slot="end" 
+              fill="clear" 
+              color="danger" 
+              (click)="removeMedication(medication.id)">
+              <ion-icon name="trash-outline"></ion-icon>
+            </ion-button>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Empty State -->
+    <ion-card *ngIf="medications.length === 0 && !showMedicationForm">
+      <ion-card-content class="empty-state">
+        <ion-icon name="medical-outline" size="large"></ion-icon>
+        <h3>No Medications Added</h3>
+        <p>Click the button above to add your first medication</p>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Logout Button -->
+    <ion-button expand="block" (click)="logout()" color="danger" class="logout-btn">
+      <ion-icon name="log-out-outline" slot="start"></ion-icon>
+      Logout
+    </ion-button>
+  </div>
+</ion-content>

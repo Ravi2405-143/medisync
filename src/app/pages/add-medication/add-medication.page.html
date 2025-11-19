@@ -1,0 +1,126 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/medications"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ isEdit ? 'Edit Medication' : 'Add Medication' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  
+  <!-- Quick Selection Section -->
+  <div *ngIf="!isEdit" class="quick-selection">
+    <ion-text color="medium">
+      <h3>Quick Select Common Medications</h3>
+    </ion-text>
+    <ion-list lines="none">
+      <ion-item *ngFor="let med of commonMedications" (click)="selectCommonMedication(med)" class="quick-med-item">
+        <ion-label>
+          <strong>{{ med.name }}</strong>
+          <p>{{ med.dosage }} • {{ med.frequency }}</p>
+        </ion-label>
+        <ion-icon name="arrow-forward-circle-outline" slot="end"></ion-icon>
+      </ion-item>
+    </ion-list>
+  </div>
+
+  <div class="divider" *ngIf="!isEdit">
+    <ion-text color="medium">OR</ion-text>
+  </div>
+
+  <!-- Manual Entry Form -->
+  <form (ngSubmit)="saveMedication()" #medicationForm="ngForm">
+    <ion-list lines="full">
+      
+      <!-- Medication Name -->
+      <ion-item>
+        <ion-input
+          label="Medication Name *"
+          labelPlacement="stacked"
+          placeholder="e.g., Aspirin, Insulin, Amoxicillin"
+          [(ngModel)]="medication.name"
+          name="name"
+          required
+        ></ion-input>
+      </ion-item>
+
+      <!-- Dosage -->
+      <ion-item>
+        <ion-input
+          label="Dosage *"
+          labelPlacement="stacked"
+          placeholder="e.g., 500mg, 10 units, 250mg/5ml"
+          [(ngModel)]="medication.dosage"
+          name="dosage"
+          required
+        ></ion-input>
+      </ion-item>
+
+      <!-- Frequency -->
+      <ion-item>
+        <ion-input
+          label="Frequency *"
+          labelPlacement="stacked"
+          placeholder="e.g., Once daily, Twice daily, Every 6 hours"
+          [(ngModel)]="medication.frequency"
+          name="frequency"
+          required
+        ></ion-input>
+      </ion-item>
+
+      <!-- Instructions -->
+      <ion-item>
+        <ion-textarea
+          label="Instructions (Optional)"
+          labelPlacement="stacked"
+          placeholder="e.g., Take with food, Before breakfast, With plenty of water"
+          [(ngModel)]="medication.instructions"
+          name="instructions"
+          rows="3"
+        ></ion-textarea>
+      </ion-item>
+
+      <!-- Start Date -->
+      <ion-item>
+        <ion-label>Start Date</ion-label>
+        <ion-datetime-button datetime="startDate"></ion-datetime-button>
+        <ion-modal [keepContentsMounted]="true">
+          <ng-template>
+            <ion-datetime 
+              id="startDate" 
+              [(ngModel)]="medication.startDate" 
+              name="startDate"
+              presentation="date"
+            ></ion-datetime>
+          </ng-template>
+        </ion-modal>
+      </ion-item>
+
+    </ion-list>
+
+    <!-- Action Buttons -->
+    <div class="ion-margin-top">
+      <ion-button 
+        type="submit" 
+        expand="block" 
+        size="large"
+        [disabled]="!medication.name.trim() || !medication.dosage.trim() || !medication.frequency.trim()"
+      >
+        <ion-icon slot="start" name="save-outline"></ion-icon>
+        {{ isEdit ? 'Update Medication' : 'Save Medication' }}
+      </ion-button>
+      
+      <ion-button 
+        expand="block" 
+        fill="outline" 
+        color="medium" 
+        (click)="cancel()"
+        class="ion-margin-top"
+      >
+        <ion-icon slot="start" name="close-outline"></ion-icon>
+        Cancel
+      </ion-button>
+    </div>
+  </form>
+</ion-content>

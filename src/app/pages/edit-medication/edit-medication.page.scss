@@ -1,0 +1,77 @@
+.medication-form {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 2rem 0 1rem 0;
+    padding: 0 1rem;
+  
+    h3 {
+      margin: 0;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+  }
+  
+  .time-slots-section {
+    background: var(--ion-color-light);
+    border-radius: 12px;
+    padding: 1rem;
+    margin: 1rem 0;
+  
+    .time-slot-item {
+      --background: transparent;
+      --padding-start: 0;
+      --inner-padding-end: 0;
+      margin-bottom: 1rem;
+  
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+  
+  .inventory-section {
+    background: var(--ion-color-light);
+    border-radius: 12px;
+    padding: 1rem;
+    margin: 1rem 0;
+  
+    h3 {
+      margin: 0 0 1rem 0;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+  }
+  
+  .action-buttons {
+    margin-top: 2rem;
+    
+    ion-button {
+      margin-bottom: 1rem;
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+  
+  // Form validation styles
+  ion-item {
+    margin-bottom: 1rem;
+    
+    &.item-has-focus {
+      --background: rgba(var(--ion-color-primary-rgb), 0.1);
+    }
+  }
+  
+  // Responsive design
+  @media (min-width: 768px) {
+    .medication-form {
+      padding: 0 2rem;
+    }
+  }

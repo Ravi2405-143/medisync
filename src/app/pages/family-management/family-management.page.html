@@ -1,0 +1,150 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/medications"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Family Management</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="showAddForm = true" *ngIf="!showAddForm">
+        <ion-icon slot="icon-only" name="person-add-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  
+  <!-- Status Info -->
+  <div style="background: #e8f4fd; padding: 12px; border-radius: 8px; margin-bottom: 16px; border-left: 4px solid #3880ff;">
+    <strong>💡 Debug Info:</strong> 
+    {{ familyMembers.length }} family member(s) loaded | 
+    Form visible: {{ showAddForm }}
+  </div>
+
+  <!-- Add Member Form -->
+  <div *ngIf="showAddForm" class="add-form">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>➕ Add Family Member</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        
+        <!-- Simple Form -->
+        <ion-item>
+          <ion-label position="stacked">Full Name *</ion-label>
+          <ion-input 
+            [(ngModel)]="newMemberName" 
+            placeholder="Enter family member's name"
+            (keyup.enter)="addFamilyMember()"
+          ></ion-input>
+        </ion-item>
+        
+        <ion-item>
+          <ion-label position="stacked">Relationship</ion-label>
+          <ion-select [(ngModel)]="newMemberRelationship">
+            <ion-select-option *ngFor="let rel of relationships" [value]="rel">
+              {{ rel }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <!-- Action Buttons -->
+        <div style="margin-top: 20px;">
+          <ion-button 
+            expand="block" 
+            (click)="addFamilyMember()"
+            [disabled]="!newMemberName || !newMemberName.trim()"
+          >
+            <ion-icon slot="start" name="checkmark-outline"></ion-icon>
+            Add Member
+          </ion-button>
+          
+          <ion-button 
+            expand="block" 
+            fill="outline" 
+            color="medium" 
+            (click)="showAddForm = false"
+            style="margin-top: 8px;"
+          >
+            <ion-icon slot="start" name="close-outline"></ion-icon>
+            Cancel
+          </ion-button>
+        </div>
+
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <!-- Family Members List -->
+  <div class="members-list">
+    
+    <!-- Header -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+      <h2 style="margin: 0;">👨‍👩‍👧‍👦 Family Members ({{ familyMembers.length }})</h2>
+      <div>
+        <ion-button size="small" fill="outline" (click)="addTestData()">
+          🧪 Test Data
+        </ion-button>
+        <ion-button size="small" fill="outline" color="danger" (click)="clearAll()" *ngIf="familyMembers.length > 1">
+          🧹 Clear All
+        </ion-button>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="familyMembers.length === 0" style="text-align: center; padding: 40px 20px; color: #666;">
+      <ion-icon name="people-outline" style="font-size: 64px; color: #ccc;"></ion-icon>
+      <h3>No Family Members</h3>
+      <p>Add your first family member to get started!</p>
+      <ion-button (click)="showAddForm = true">
+        <ion-icon slot="start" name="person-add-outline"></ion-icon>
+        Add First Member
+      </ion-button>
+    </div>
+
+    <!-- Members List -->
+    <ion-list *ngIf="familyMembers.length > 0">
+      <ion-item 
+        *ngFor="let member of familyMembers" 
+        (click)="viewMember(member)"
+        button
+        detail
+      >
+        <!-- Avatar -->
+        <div 
+          slot="start" 
+          style="width: 50px; height: 50px; border-radius: 50%; background: member.color; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 16px;"
+        >
+          {{ getInitials(member.name) }}
+        </div>
+        
+        <!-- Member Info -->
+        <ion-label>
+          <h2 style="font-weight: 600;">{{ member.name }}</h2>
+          <p>{{ member.relationship }}</p>
+        </ion-label>
+        
+        <!-- Delete Button -->
+        <ion-button 
+          slot="end" 
+          fill="clear" 
+          color="danger" 
+          (click)="deleteMember(member, $event)"
+          *ngIf="member.name !== 'Me'"
+        >
+          <ion-icon name="trash-outline"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-list>
+
+  </div>
+
+  <!-- Quick Add Button -->
+  <div *ngIf="!showAddForm" style="margin-top: 20px;">
+    <ion-button expand="block" (click)="showAddForm = true">
+      <ion-icon slot="start" name="person-add-outline"></ion-icon>
+      Add Family Member
+    </ion-button>
+  </div>
+
+</ion-content>

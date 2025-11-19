@@ -1,0 +1,185 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="cancel()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{ isEditMode ? 'Edit Medication' : 'Add Medication' }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="saveMedication()" strong="true">
+        Save
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <form (ngSubmit)="saveMedication()" class="medication-form">
+    
+    <!-- Medication Name -->
+    <ion-item>
+      <ion-label position="stacked">Medication Name *</ion-label>
+      <ion-input 
+        type="text" 
+        placeholder="Enter medication name"
+        [(ngModel)]="medication.name" 
+        name="name"
+        required>
+      </ion-input>
+    </ion-item>
+
+    <!-- Dosage -->
+    <ion-item>
+      <ion-label position="stacked">Dosage *</ion-label>
+      <ion-input 
+        type="text" 
+        placeholder="e.g., 500mg, 1 tablet, 10ml"
+        [(ngModel)]="medication.dosage" 
+        name="dosage"
+        required>
+      </ion-input>
+    </ion-item>
+
+    <!-- Frequency Type -->
+    <ion-item>
+      <ion-label position="stacked">Frequency</ion-label>
+      <ion-select 
+        [(ngModel)]="medication.frequency.type" 
+        name="frequencyType"
+        interface="action-sheet">
+        <ion-select-option value="daily">Daily</ion-select-option>
+        <ion-select-option value="weekly">Weekly</ion-select-option>
+        <ion-select-option value="custom">Custom</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <!-- Time Slots -->
+    <div class="time-slots-section">
+      <div class="section-header">
+        <ion-text color="medium">
+          <h3>Reminder Times</h3>
+        </ion-text>
+        <ion-button size="small" color="primary" fill="clear" (click)="addTimeSlot()">
+          <ion-icon name="add" slot="start"></ion-icon>
+          Add Time
+        </ion-button>
+      </div>
+
+      <ion-item *ngFor="let time of medication.frequency.times; let i = index" class="time-slot-item">
+        <ion-label position="stacked">Time {{ i + 1 }}</ion-label>
+        <ion-select 
+          [(ngModel)]="medication.frequency.times[i]" 
+          [name]="'time' + i"
+          interface="action-sheet">
+          <ion-select-option *ngFor="let availableTime of availableTimes" [value]="availableTime">
+            {{ availableTime }}
+          </ion-select-option>
+        </ion-select>
+        <ion-button 
+          *ngIf="medication.frequency.times.length > 1" 
+          slot="end" 
+          fill="clear" 
+          color="danger" 
+          (click)="removeTimeSlot(i)">
+          <ion-icon name="close" slot="icon-only"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </div>
+
+    <!-- Start Date -->
+    <ion-item>
+      <ion-label position="stacked">Start Date *</ion-label>
+      <ion-input 
+        type="date" 
+        [(ngModel)]="medication.startDate" 
+        name="startDate"
+        required>
+      </ion-input>
+    </ion-item>
+
+    <!-- End Date (Optional) -->
+    <ion-item>
+      <ion-label position="stacked">End Date (Optional)</ion-label>
+      <ion-input 
+        type="date" 
+        [(ngModel)]="medication.endDate" 
+        name="endDate"
+        placeholder="Leave empty for ongoing medication">
+      </ion-input>
+    </ion-item>
+
+    <!-- Instructions -->
+    <ion-item>
+      <ion-label position="stacked">Instructions (Optional)</ion-label>
+      <ion-textarea 
+        placeholder="e.g., Take with food, Avoid alcohol, etc."
+        [(ngModel)]="medication.instructions" 
+        name="instructions"
+        rows="3"
+        autoGrow="true">
+      </ion-textarea>
+    </ion-item>
+
+    <!-- Inventory Section -->
+    <div class="inventory-section">
+      <ion-text color="medium">
+        <h3>Inventory Management</h3>
+      </ion-text>
+
+      <ion-item>
+        <ion-label position="stacked">Total Quantity</ion-label>
+        <ion-input 
+          type="number" 
+          placeholder="Total pills/bottles"
+          [(ngModel)]="medication.inventory.totalQuantity" 
+          name="totalQuantity"
+          min="1"
+          required>
+        </ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Current Quantity</ion-label>
+        <ion-input 
+          type="number" 
+          placeholder="Currently available"
+          [(ngModel)]="medication.inventory.currentQuantity" 
+          name="currentQuantity"
+          [max]="medication.inventory.totalQuantity"
+          min="0"
+          required>
+        </ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Refill Alert When</ion-label>
+        <ion-input 
+          type="number" 
+          placeholder="Alert when quantity reaches"
+          [(ngModel)]="medication.inventory.refillThreshold" 
+          name="refillThreshold"
+          min="1"
+          required>
+        </ion-input>
+      </ion-item>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+      <ion-button type="submit" expand="block" color="primary" size="large" [disabled]="!medication.name || !medication.dosage">
+        <ion-icon name="save" slot="start"></ion-icon>
+        {{ isEditMode ? 'Update Medication' : 'Add Medication' }}
+      </ion-button>
+
+      <ion-button *ngIf="isEditMode" expand="block" color="danger" fill="outline" size="large" (click)="deleteMedication()">
+        <ion-icon name="trash" slot="start"></ion-icon>
+        Delete Medication
+      </ion-button>
+
+      <ion-button expand="block" color="medium" fill="clear" size="large" (click)="cancel()">
+        Cancel
+      </ion-button>
+    </div>
+  </form>
+</ion-content>

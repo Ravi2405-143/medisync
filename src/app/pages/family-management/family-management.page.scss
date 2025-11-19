@@ -1,0 +1,20 @@
+.add-form {
+  margin-bottom: 20px;
+}
+
+.members-list {
+  h2 {
+    color: var(--ion-color-dark);
+  }
+}
+
+ion-item {
+  --border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+/* Make it obvious when clicking works */
+ion-item[button] {
+  --background-hover: var(--ion-color-light);
+  transition: background-color 0.2s ease;
+}

@@ -1,0 +1,99 @@
+<ion-content>
+  <div class="container">
+    <!-- Login Form -->
+    <div *ngIf="!isRegistering" class="form-container">
+      <h2>Sign In</h2>
+      
+      <ion-item>
+        <ion-label position="stacked">Email</ion-label>
+        <ion-input 
+          type="email" 
+          [(ngModel)]="email" 
+          placeholder="Enter your email">
+        </ion-input>
+      </ion-item>
+      
+      <ion-item>
+        <ion-label position="stacked">Password</ion-label>
+        <ion-input 
+          type="password" 
+          [(ngModel)]="password" 
+          placeholder="Enter your password">
+        </ion-input>
+      </ion-item>
+      
+      <ion-button 
+        expand="block" 
+        (click)="login()" 
+        class="login-button">
+        Sign In
+      </ion-button>
+      
+      <div class="register-link">
+        <p>Don't have an account?</p>
+        <ion-button 
+          fill="clear" 
+          (click)="toggleRegister()">
+          Create Account
+        </ion-button>
+      </div>
+    </div>
+
+    <!-- Registration Form -->
+    <div *ngIf="isRegistering" class="form-container">
+      <h2>Create Account</h2>
+      
+      <ion-item>
+        <ion-label position="stacked">Full Name</ion-label>
+        <ion-input 
+          type="text" 
+          [(ngModel)]="name" 
+          placeholder="Enter your full name">
+        </ion-input>
+      </ion-item>
+      
+      <ion-item>
+        <ion-label position="stacked">Mobile Number</ion-label>
+        <ion-input 
+          type="tel" 
+          [(ngModel)]="mobileNumber" 
+          placeholder="Enter your mobile number">
+        </ion-input>
+      </ion-item>
+      
+      <ion-item>
+        <ion-label position="stacked">Email</ion-label>
+        <ion-input 
+          type="email" 
+          [(ngModel)]="email" 
+          placeholder="Enter your email">
+        </ion-input>
+      </ion-item>
+      
+      <ion-item>
+        <ion-label position="stacked">Password</ion-label>
+        <ion-input 
+          type="password" 
+          [(ngModel)]="password" 
+          placeholder="Create a password">
+        </ion-input>
+      </ion-item>
+      
+      <ion-button 
+        expand="block" 
+        (click)="register()" 
+        class="register-button">
+        Create Account
+      </ion-button>
+      
+      <div class="login-link">
+        <p>Already have an account?</p>
+        <ion-button 
+          fill="clear" 
+          (click)="toggleRegister()">
+          Sign In
+        </ion-button>
+      </div>
+    </div>
+  </div>
+</ion-content>

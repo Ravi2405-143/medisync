@@ -1,0 +1,115 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/login"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Create Account</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  
+  <div style="text-align: center; margin: 30px 0;">
+    <h1 style="color: var(--ion-color-primary);">Join MediSync</h1>
+    <p style="color: var(--ion-color-medium);">Create your account to manage medications</p>
+  </div>
+
+  <!-- Registration Form -->
+  <div class="form-container">
+    
+    <!-- Full Name -->
+    <ion-item style="margin-bottom: 16px;">
+      <ion-input 
+        label="Full Name" 
+        labelPlacement="stacked"
+        placeholder="Enter your full name"
+        [(ngModel)]="userData.fullName"
+        required>
+      </ion-input>
+    </ion-item>
+
+    <!-- Email -->
+    <ion-item style="margin-bottom: 16px;">
+      <ion-input 
+        label="Email" 
+        labelPlacement="stacked"
+        type="email"
+        placeholder="Enter your email"
+        [(ngModel)]="userData.email"
+        required>
+      </ion-input>
+    </ion-item>
+
+    <!-- Password -->
+    <ion-item style="margin-bottom: 24px;">
+      <ion-input 
+        label="Password" 
+        labelPlacement="stacked"
+        type="password"
+        placeholder="Enter password (min 6 characters)"
+        [(ngModel)]="userData.password"
+        required>
+      </ion-input>
+    </ion-item>
+
+    <!-- Status Message -->
+    <div class="status-message">
+      {{ statusMessage }}
+    </div>
+
+    <!-- Register Button -->
+    <ion-button 
+      expand="block" 
+      size="large" 
+      color="primary"
+      (click)="register()"
+      [disabled]="isLoading"
+      class="register-btn">
+      
+      <ion-spinner *ngIf="isLoading" name="crescent"></ion-spinner>
+      <span *ngIf="!isLoading">Create Account</span>
+    </ion-button>
+
+    <!-- Test Button -->
+    <ion-button 
+      expand="block" 
+      fill="outline"
+      color="success"
+      (click)="testClick()"
+      class="test-btn">
+      🎯 Test Button
+    </ion-button>
+
+    <!-- Quick Fill -->
+    <ion-button 
+      expand="block" 
+      fill="clear"
+      color="medium"
+      (click)="quickFill()"
+      class="quick-fill-btn">
+      Auto-Fill Form for Testing
+    </ion-button>
+
+  </div>
+
+  <!-- Debug Info -->
+  <div class="debug-info">
+    <strong>Form Status:</strong> 
+    {{ isFormValid() ? '✅ Ready to submit' : '❌ Fill all fields' }} | 
+    <strong>Fields:</strong> 
+    Name: {{ userData.fullName.length > 0 ? '✅' : '❌' }}, 
+    Email: {{ userData.email.length > 0 ? '✅' : '❌' }}, 
+    Password: {{ userData.password.length >= 6 ? '✅' : '❌' }}
+  </div>
+
+  <!-- Login Link -->
+  <div style="text-align: center; margin-top: 40px;">
+    <p style="color: var(--ion-color-medium);">
+      Already have an account? 
+      <a routerLink="/login" style="color: var(--ion-color-primary); text-decoration: none;">
+        <strong>Sign in</strong>
+      </a>
+    </p>
+  </div>
+
+</ion-content>
