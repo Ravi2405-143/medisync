@@ -56,3 +56,5 @@ Thumbs.db
 android/
 ios/
 www/
+.angular/
+node_modules/
