@@ -1,0 +1,7 @@
+{
+  "name": "medisync-app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
