@@ -2,7 +2,8 @@
   <div class="container">
     <!-- Login Form -->
     <div *ngIf="!isRegistering" class="form-container">
-      <h2>Sign In</h2>
+      <h2>Welcome to MediSync</h2>
+      <p>Your premium medication tracker</p>
       
       <ion-item>
         <ion-label position="stacked">Email</ion-label>
@@ -30,18 +31,19 @@
       </ion-button>
       
       <div class="register-link">
-        <p>Don't have an account?</p>
+        <p>New to MediSync?</p>
         <ion-button 
           fill="clear" 
           (click)="toggleRegister()">
-          Create Account
+          Create Premium Account
         </ion-button>
       </div>
     </div>
 
     <!-- Registration Form -->
     <div *ngIf="isRegistering" class="form-container">
-      <h2>Create Account</h2>
+      <h2>Join MediSync</h2>
+      <p>Start your health journey today</p>
       
       <ion-item>
         <ion-label position="stacked">Full Name</ion-label>
@@ -75,7 +77,7 @@
         <ion-input 
           type="password" 
           [(ngModel)]="password" 
-          placeholder="Create a password">
+          placeholder="Create a secure password">
         </ion-input>
       </ion-item>
       
@@ -91,7 +93,7 @@
         <ion-button 
           fill="clear" 
           (click)="toggleRegister()">
-          Sign In
+          Back to Sign In
         </ion-button>
       </div>
     </div>

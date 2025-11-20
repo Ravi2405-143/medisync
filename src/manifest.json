@@ -1,0 +1,9 @@
+{
+  "name": "MediSync",
+  "short_name": "MediSync",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1976d2",
+  "icons": []
+}

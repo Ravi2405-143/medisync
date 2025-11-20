@@ -12,20 +12,67 @@
 
 <ion-content>
   <div class="container">
-    <h2>Welcome to Medication Manager</h2>
-    <p>Manage your medications efficiently</p>
+    <div class="welcome-section">
+      <h2>Welcome Back!</h2>
+      <p>Manage your health with confidence</p>
+    </div>
+    <p>Track your daily medications</p>
+
+    <!-- Notification Permission Button -->
+    <ion-card *ngIf="'Notification' in window && Notification.permission !== 'granted'">
+      <ion-card-content>
+        <p>Enable notifications for medication reminders</p>
+        <ion-button expand="block" (click)="requestNotificationPermission()" color="tertiary">
+          <ion-icon name="notifications-outline" slot="start"></ion-icon>
+          Enable Notifications
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
 
     <!-- Medication Summary -->
     <ion-card>
       <ion-card-header>
-        <ion-card-title>Medication Summary</ion-card-title>
+        <ion-card-title>Today's Summary</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <p>Total Medications: {{ getMedicationsCount() }}</p>
-        <ion-button expand="block" (click)="toggleMedicationForm()" color="primary">
-          <ion-icon name="add-circle-outline" slot="start"></ion-icon>
-          Add New Medication
-        </ion-button>
+        <div class="summary-grid">
+          <div class="summary-item">
+            <h3>Total</h3>
+            <p class="count total">{{ getMedicationsCount() }}</p>
+          </div>
+          <div class="summary-item">
+            <h3>Taken</h3>
+            <p class="count taken">{{ getTakenCount() }}</p>
+          </div>
+          <div class="summary-item">
+            <h3>Not Taken</h3>
+            <p class="count not-taken">{{ getNotTakenCount() }}</p>
+          </div>
+        </div>
+        
+        <div class="action-buttons">
+          <ion-button expand="block" (click)="toggleMedicationForm()" color="primary">
+            <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+            Add Medication
+          </ion-button>
+          
+          <div class="button-row">
+            <ion-button expand="block" (click)="saveMedications()" color="success" fill="outline">
+              <ion-icon name="save-outline" slot="start"></ion-icon>
+              Save All
+            </ion-button>
+            
+            <ion-button expand="block" (click)="checkMedicationReminders()" color="warning" fill="outline">
+              <ion-icon name="alarm-outline" slot="start"></ion-icon>
+              Check Reminders
+            </ion-button>
+            
+            <ion-button expand="block" (click)="clearAllMedications()" color="danger" fill="outline">
+              <ion-icon name="trash-outline" slot="start"></ion-icon>
+              Clear All
+            </ion-button>
+          </div>
+        </div>
       </ion-card-content>
     </ion-card>
 
@@ -87,23 +134,41 @@
     <ion-card *ngIf="medications.length > 0">
       <ion-card-header>
         <ion-card-title>Your Medications</ion-card-title>
+        <ion-card-subtitle>Tap the circle to mark as Taken/Not Taken</ion-card-subtitle>
       </ion-card-header>
       <ion-card-content>
         <ion-list>
-          <ion-item *ngFor="let medication of medications" class="medication-item">
+          <ion-item *ngFor="let medication of medications" class="medication-item" [class.taken]="medication.isTaken">
             <ion-label>
               <h3>{{ medication.name }}</h3>
               <p>Dosage: {{ medication.dosage }}</p>
               <p>Frequency: {{ medication.frequency }}</p>
               <p>Time: {{ medication.time }}</p>
+              <p *ngIf="medication.lastTaken" class="last-taken">
+                Last taken: {{ medication.lastTaken | date:'shortTime' }}
+              </p>
             </ion-label>
-            <ion-button 
-              slot="end" 
-              fill="clear" 
-              color="danger" 
-              (click)="removeMedication(medication.id)">
-              <ion-icon name="trash-outline"></ion-icon>
-            </ion-button>
+            
+            <div class="medication-actions">
+              <ion-button 
+                fill="clear" 
+                [color]="medication.isTaken ? 'success' : 'medium'" 
+                (click)="toggleMedicationStatus(medication)"
+                class="status-button">
+                <ion-icon 
+                  [name]="medication.isTaken ? 'checkmark-circle' : 'ellipse-outline'" 
+                  size="large"
+                  slot="icon-only">
+                </ion-icon>
+              </ion-button>
+              
+              <ion-button 
+                fill="clear" 
+                color="danger" 
+                (click)="removeMedication(medication.id)">
+                <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+              </ion-button>
+            </div>
           </ion-item>
         </ion-list>
       </ion-card-content>

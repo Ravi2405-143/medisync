@@ -4,14 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
 
-interface Medication {
-  id: number;
-  name: string;
-  dosage: string;
-  frequency: string;
-  time: string;
-}
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -26,17 +18,6 @@ export class LoginPage {
   name: string = '';
   isRegistering: boolean = false;
   
-  // Medication properties
-  medications: Medication[] = [];
-  showMedicationForm: boolean = false;
-  newMedication: Medication = {
-    id: 0,
-    name: '',
-    dosage: '',
-    frequency: '',
-    time: ''
-  };
-
   constructor(private router: Router) {}
 
   // Login method
@@ -47,7 +28,6 @@ export class LoginPage {
     }
     
     console.log('Logging in with:', this.email);
-    // Add your actual login logic here
     this.router.navigate(['/home']);
   }
 
@@ -73,36 +53,7 @@ export class LoginPage {
       email: this.email
     });
     
-    // Add your actual registration logic here
     // After successful registration, switch back to login
     this.isRegistering = false;
-  }
-
-  // Medication methods
-  addMedication() {
-    if (this.newMedication.name && this.newMedication.dosage) {
-      this.newMedication.id = Date.now();
-      this.medications.push({...this.newMedication});
-      this.resetMedicationForm();
-      this.showMedicationForm = false;
-    }
-  }
-
-  removeMedication(id: number) {
-    this.medications = this.medications.filter(med => med.id !== id);
-  }
-
-  toggleMedicationForm() {
-    this.showMedicationForm = !this.showMedicationForm;
-  }
-
-  resetMedicationForm() {
-    this.newMedication = {
-      id: 0,
-      name: '',
-      dosage: '',
-      frequency: '',
-      time: ''
-    };
   }
 }

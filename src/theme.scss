@@ -1,0 +1,117 @@
+/* Premium MediSync Theme */
+:root {
+  --ion-color-primary: #6366f1;
+  --ion-color-primary-rgb: 99, 102, 241;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #5658d4;
+  --ion-color-primary-tint: #7375f3;
+
+  --ion-color-secondary: #8b5cf6;
+  --ion-color-secondary-rgb: 139, 92, 246;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  --ion-color-secondary-shade: #7a51d8;
+  --ion-color-secondary-tint: #976cf7;
+
+  --ion-color-tertiary: #06b6d4;
+  --ion-color-tertiary-rgb: 6, 182, 212;
+  --ion-color-tertiary-contrast: #ffffff;
+  --ion-color-tertiary-contrast-rgb: 255, 255, 255;
+  --ion-color-tertiary-shade: #05a0ba;
+  --ion-color-tertiary-tint: #1fbdd8;
+
+  --ion-color-success: #10b981;
+  --ion-color-success-rgb: 16, 185, 129;
+  --ion-color-success-contrast: #ffffff;
+  --ion-color-success-contrast-rgb: 255, 255, 255;
+  --ion-color-success-shade: #0ea371;
+  --ion-color-success-tint: #28c08e;
+
+  --ion-color-warning: #f59e0b;
+  --ion-color-warning-rgb: 245, 158, 11;
+  --ion-color-warning-contrast: #000000;
+  --ion-color-warning-contrast-rgb: 0, 0, 0;
+  --ion-color-warning-shade: #d88b0a;
+  --ion-color-warning-tint: #f6a823;
+
+  --ion-color-danger: #ef4444;
+  --ion-color-danger-rgb: 239, 68, 68;
+  --ion-color-danger-contrast: #ffffff;
+  --ion-color-danger-contrast-rgb: 255, 255, 255;
+  --ion-color-danger-shade: #d23c3c;
+  --ion-color-danger-tint: #f15757;
+
+  --ion-background-color: #f8fafc;
+  --ion-background-color-rgb: 248, 250, 252;
+  --ion-text-color: #1e293b;
+  --ion-text-color-rgb: 30, 41, 59;
+
+  --ion-card-background: #ffffff;
+  --ion-card-border-radius: 16px;
+  --ion-card-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Premium global styles */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+}
+
+ion-content {
+  --background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+ion-toolbar {
+  --background: rgba(255, 255, 255, 0.95);
+  --border-color: transparent;
+  backdrop-filter: blur(20px);
+}
+
+ion-card {
+  --background: var(--ion-card-background);
+  border-radius: var(--ion-card-border-radius);
+  box-shadow: var(--ion-card-shadow);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Premium buttons */
+ion-button {
+  --border-radius: 12px;
+  --box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.1);
+  font-weight: 600;
+  text-transform: none;
+}
+
+/* Premium inputs */
+ion-item {
+  --border-radius: 12px;
+  --background: rgba(255, 255, 255, 0.8);
+  margin-bottom: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
